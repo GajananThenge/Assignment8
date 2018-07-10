@@ -73,7 +73,7 @@ try:
     from sklearn import metrics
     from sklearn.cross_validation import cross_val_score
     dta = sm.datasets.fair.load_pandas().data
-    
+    from sklearn.metrics import confusion_matrix,accuracy_score
     # add "affair" column: 1 represents having affairs, 0 represents not
     dta['affair'] = (dta.affairs > 0).astype(int)
     y, X = dmatrices('affair ~ rate_marriage + age + yrs_married + children + \
@@ -100,5 +100,10 @@ try:
     classifier.fit(X_train,y_train)
     y_pred = classifier.predict(X_test)
     
+    #Get the Accuracy and confusion matrix
+    cm = confusion_matrix(y_test,y_pred)
+    acc = accuracy_score(y_test,y_pred)
+    
+    print("Accutracy in  % : {} ".format(acc.round(2)))
 except Exception as e:
     print(e)
